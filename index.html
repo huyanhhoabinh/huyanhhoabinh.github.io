@@ -24,13 +24,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 -->
-<html>
+<html lang="en">
 <head>
     <title>Vòng quay may mắn</title>
     <link rel="stylesheet" href="main.css" type="text/css"/>
-    <script type="text/javascript" src="Winwheel.min.js"></script>
-
+    <script type="text/javascript" src="Winwheel.js"></script>
     <script type="text/javascript" src="TweenMax.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div align="center">
@@ -46,22 +46,19 @@
                      <table class="power" cellpadding="10" cellspacing="0">
                         <tr>
                             <td>Enter name</td>
-                            <td><input type="text" id="nameStudent"></td>
-                            <td><button onClick="addSegment();" id="addStudent">Add Student</button></td>
+                            <td><input type="text" id="nameStudent" onkeydown="Javascript: if (event.keyCode==13) addSegment();"></td>
+                            <td>
+                            </td>
                         </tr>
                          <tr>
                              <td> <img id="spin_button" src="spin_off.png" alt="Spin" onClick="startSpin();"/></td>
-                             <td><a href="#" onClick="resetWheel(); return false;">Play Again</a><br/></td>
-                             <td><a href="#" onClick="resetStudents(); return false;">Reset Student</a><br/></td>
+                             <td><a href="#" onClick="resetWheel(); return false;">Chơi lại</a><br/></td>
+                             <td><a href="#" onClick="resetStudents(); return false;">Khởi tạo lại</a><br/></td>
                          </tr>
                     </table>
-<!--                    <br/>-->
-<!--                    <img id="spin_button" src="spin_off.png" alt="Spin" onClick="startSpin();"/>-->
-<!--                    <br/><br/>-->
-<!--                    &nbsp;&nbsp;<a href="#" onClick="resetWheel(); return false;">Play Again</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset)-->
                 </div>
             </td>
-            <td width="438" height="582" class="the_wheel" align="center" valign="center">
+            <td width="438" height="582" class="the_wheel" align="center" valign="center" id="circle">
                 <canvas id="canvas" width="434" height="434">
                     <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try
                         another.</p>

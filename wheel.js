@@ -1,9 +1,23 @@
 let audio = new Audio('background-sound.mp3');
 // Create new wheel object specifying the parameters at creation time.
+// let handWheel = new Winwheel({
+//     'canvasId'    : 'handWheel',
+//     'fillStyle'   : '#7de6ef',
+//     'outerRadius' : 150,
+//     'centerY'     : 230,
+//     'numSegments' : 10,
+//     'segments'    :
+//         [
+//             {'fillStyle' : '#e7706f'}
+//         ]
+// });
+
 let theWheel = new Winwheel({
     // 'numSegments': 6,     // Specify number of segments.
-    'outerRadius': 212,   // Set outer radius so wheel fits inside the background.
+    'outerRadius': 216,   // Set outer radius so wheel fits inside the background.
     'textFontSize': 35,    // Set font size as desired.
+    'textLineWidth'     : 0,
+    // 'fillStyle' : 'white',
     // 'segments':        // Define segments including colour and text.
     //     [
     //         {'fillStyle': '#eae56f', 'text': '10 coins'},
@@ -16,11 +30,33 @@ let theWheel = new Winwheel({
     'animation':           // Specify the animation to use.
         {
             'type': 'spinToStop',
-            'duration': 20,     // Duration in seconds.
-            'spins': 12,     // Number of complete spins.
-            'callbackFinished': alertPrize
+            'duration': 18,     // Duration in seconds.
+            'spins': 10,     // Number of complete spins.
+            'callbackFinished' : 'alertPrize()'
         }
 });
+// // Create image in memory.
+// let handImage = new Image();
+// handImage.src = 'pointing_hand.png';
+// // Set onload of the image to anonymous function to draw on the canvas once the image has loaded.
+// handImage.onload = function()
+// {
+//     let handCanvas = document.getElementById('canvas');
+//     let ctx = handCanvas.getContext('2d');
+//
+//     if (ctx) {
+//         ctx.save();
+//         ctx.translate(200, 150);
+//         ctx.rotate(theWheel.degToRad(-40));  // Here I just rotate the image a bit.
+//         ctx.translate(-200, -150);
+//         ctx.drawImage(handImage, 255, 110);   // Draw the image at the specified x and y.
+//         ctx.restore();
+//     }
+// };
+
+// Set source of the image. Once loaded the onload callback above will be triggered.
+
+
 let prizeRate = [
     {'prize': '10', 'from': 11, 'to': 40, 'fromAngle': 1, 'toAngle': 59},
     {'prize': '20', 'from': 41, 'to': 60, 'fromAngle': 61, 'toAngle': 119},
@@ -38,6 +74,7 @@ function init() {
     theWheel.numSegments = 0;
     theWheel.segments = [];
     theWheel.draw();
+    document.getElementById("circle").style.visibility = 'hidden';
 }
 init();
 // -------------------------------------------------------
@@ -46,7 +83,7 @@ init();
 function startSpin() {
     // Ensure that spinning can't be clicked again while already running.
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
-        theWheel.animation.spins = 3;
+        // theWheel.animation.spins = 50;
         document.getElementById('spin_button').src = "spin_off.png";
         document.getElementById('spin_button').className = "";
         wheelSpinning = true;
@@ -77,7 +114,8 @@ function resetStudents() {
 // -------------------------------------------------------
 function alertPrize(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-    alert("You have won " + indicatedSegment.text);
+    var winningSegment = theWheel.getIndicatedSegment();
+    alert("Người thắng cuộc là " + winningSegment.text);
 }
 
 //
@@ -95,20 +133,23 @@ function alertPrize(indicatedSegment) {
 //     theWheel.startAnimation();
 // }
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInt() {
+    let timestamp = new Date().getUTCMilliseconds();
+    return (Math.floor((Math.random() * timestamp)%100) + 1);
 }
 
 function addSegment() {
+    document.getElementById("circle").style.visibility = 'visible';
     let nameStudent = document.getElementById("nameStudent").value;
+
     if (nameStudent != "" && nameStudent != undefined) {
         let date = new Date();
         let randomColor = `#` + (Math.random() * 0xFFFFFF << 0).toString(16);
         theWheel.addSegment({
             'text': nameStudent,
-            'fillStyle': randomColor
+            'fillStyle': randomColor,
+            'strokeStyle' : randomColor,
+            'lineWidth' : 0
         }, 1);
 
 
