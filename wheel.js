@@ -11,12 +11,13 @@ let audio = new Audio('background-sound.mp3');
 //             {'fillStyle' : '#e7706f'}
 //         ]
 // });
-
+let colors = ['#9ED110', '#50B517', '#179067', '#476EAF', '#9f49ac', '#CC42A2', '#FF3BA7', '#FF5800', '#FF8100', '#FEAC00', '#FFCC00', '#EDE604'];
 let theWheel = new Winwheel({
     // 'numSegments': 6,     // Specify number of segments.
     'outerRadius': 216,   // Set outer radius so wheel fits inside the background.
-    'textFontSize': 35,    // Set font size as desired.
+    'textFontSize': 25,    // Set font size as desired.
     'textLineWidth'     : 0,
+    'textFontFamily' : 'Papyrus',
     // 'fillStyle' : 'white',
     // 'segments':        // Define segments including colour and text.
     //     [
@@ -132,7 +133,9 @@ function alertPrize(indicatedSegment) {
 //     theWheel.animation.stopAngle = stopAt;
 //     theWheel.startAnimation();
 // }
-
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 function getRandomInt() {
     let timestamp = new Date().getUTCMilliseconds();
     return (Math.floor((Math.random() * timestamp)%100) + 1);
@@ -144,7 +147,7 @@ function addSegment() {
 
     if (nameStudent != "" && nameStudent != undefined) {
         let date = new Date();
-        let randomColor = `#` + (Math.random() * 0xFFFFFF << 0).toString(16);
+        let randomColor = colors[randomIntFromInterval(0, colors.length - 1)];
         theWheel.addSegment({
             'text': nameStudent,
             'fillStyle': randomColor,
