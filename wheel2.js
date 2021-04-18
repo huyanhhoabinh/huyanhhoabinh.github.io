@@ -24,14 +24,14 @@ let theWheel = new Winwheel({
     'segments':        // Define segments including colour and text.
         [
             {'fillStyle': '#9ED110', 'text': 'x1 coins'},
-            {'fillStyle': '#50B517', 'text': 'x2 coins'},
-            {'fillStyle': '#179067', 'text': 'x3 coins'},
-            {'fillStyle': '#476EAF', 'text': 'x5 coins'},
-            {'fillStyle': '#CC42A2', 'text': 'x10 coins'},
-            {'fillStyle': '#FF3BA7', 'text': 'x1/2 coins'},
-            {'fillStyle': '#FF5800', 'text': 'x1/3 coins'},
-            {'fillStyle': '#FF8100', 'text': 'x1/4 coins'},
-            {'fillStyle': '#FEAC00', 'text': 'Empty Coins'}
+            {'fillStyle': '#50B517', 'text': 'x1/2 coins'},
+            {'fillStyle': '#179067', 'text': 'x2 coins'},
+            {'fillStyle': '#476EAF', 'text': 'x1/3 coins'},
+            {'fillStyle': '#CC42A2', 'text': 'x3 coins'},
+            {'fillStyle': '#FF3BA7', 'text': 'x1/4 coins'},
+            {'fillStyle': '#FF5800', 'text': 'x5 coins'},
+            {'fillStyle': '#FF8100', 'text': 'Empty coins'},
+            {'fillStyle': '#FEAC00', 'text': 'x10'}
         ],
     'animation':           // Specify the animation to use.
         {
@@ -64,17 +64,17 @@ let theWheel = new Winwheel({
 
 
 let prizeRate = [
-    {'prize': 'x1', 'from': 1, 'to': 30, 'fromAngle': 1, 'toAngle': 39},
-    {'prize': 'x2', 'from': 31, 'to': 45, 'fromAngle': 41, 'toAngle': 79},
-    {'prize': 'x3', 'from': 46, 'to': 55, 'fromAngle': 81, 'toAngle': 119},
-    {'prize': 'x5', 'from': 56, 'to': 60, 'fromAngle': 121, 'toAngle': 159},
-    {'prize': 'x10', 'from': 61, 'to': 61, 'fromAngle': 161, 'toAngle': 199},
-    {'prize': 'x1/2', 'from': 62, 'to': 76, 'fromAngle': 201, 'toAngle': 239},
-    {'prize': 'x1/3', 'from': 77, 'to': 91, 'fromAngle': 241, 'toAngle': 279},
-    {'prize': 'x1/4', 'from': 92, 'to': 98, 'fromAngle': 281, 'toAngle': 319},
-    {'prize': 'empty', 'from': 99, 'to': 100, 'fromAngle': 321, 'toAngle': 359}
+    {'prize': 'x1', 'from': 1, 'to': 23, 'fromAngle': 1, 'toAngle': 39},
+    {'prize': 'x1/2', 'from': 24, 'to': 55, 'fromAngle': 41, 'toAngle': 79},
+    {'prize': 'x2', 'from': 56, 'to':69, 'fromAngle': 81, 'toAngle': 119},
+    {'prize': 'x1/3', 'from':70, 'to': 78, 'fromAngle': 121, 'toAngle': 159},
+    {'prize': 'x3', 'from': 79, 'to': 86, 'fromAngle': 161, 'toAngle': 199},
+    {'prize': 'x1/4', 'from': 87, 'to': 92, 'fromAngle': 201, 'toAngle': 239},
+    {'prize': 'x5', 'from': 93, 'to': 96, 'fromAngle': 241, 'toAngle': 279},
+    {'prize': 'empty', 'from': 97, 'to': 99, 'fromAngle': 281, 'toAngle': 319},
+    {'prize': 'x10', 'from': 100, 'to': 100, 'fromAngle': 321, 'toAngle': 359}
 ];
-
+let arrayIndexsWin = [0,2,4,6,8];
 // Vars used by the code in this page to do power controls.
 let wheelPower = 0;
 let wheelSpinning = false;
@@ -200,13 +200,12 @@ function gimmick(el) {
 
 function calculatePrize() {
     let randomValue = getRandomInt();
-    // console.log("ket qua" + randomValue);
     let stopAt;
     for (var i =0;i <= prizeRate.length; i++) {
         if (randomValue >= prizeRate[i].from && randomValue <= prizeRate[i].to) {
             console.log("phan thuong " + prizeRate[i].prize);
             stopAt = randomIntFromInterval(prizeRate[i].fromAngle, prizeRate[i].toAngle);
-            if(i >= 0 && i <= 4) {
+            if(arrayIndexsWin.includes(i)) {
                 predictWinning = true;
             }
             break;
@@ -222,24 +221,3 @@ function getRandomInt() {
     let timestamp = new Date().getUTCMilliseconds();
     return (Math.floor((Math.random() * timestamp)%100) + 1);
 }
-
-// function addSegment() {
-//     document.getElementById("circle").style.visibility = 'visible';
-//     let nameStudent = document.getElementById("nameStudent").value;
-//
-//     if (nameStudent != "" && nameStudent != undefined) {
-//         let date = new Date();
-//         let randomColor = colors[randomIntFromInterval(0, colors.length - 1)];
-//         theWheel.addSegment({
-//             'text': nameStudent,
-//             'fillStyle': randomColor,
-//             'strokeStyle' : randomColor,
-//             'lineWidth' : 0
-//         }, 1);
-//
-//
-//         theWheel.draw();
-//         document.getElementById("nameStudent").value = "";
-//     }
-//
-// }
