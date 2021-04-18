@@ -1,18 +1,18 @@
 let audio = new Audio('background-sound.mp3');
 // Create new wheel object specifying the parameters at creation time.
 let theWheel = new Winwheel({
-    'numSegments': 6,     // Specify number of segments.
+    // 'numSegments': 6,     // Specify number of segments.
     'outerRadius': 212,   // Set outer radius so wheel fits inside the background.
     'textFontSize': 35,    // Set font size as desired.
-    'segments':        // Define segments including colour and text.
-        [
-            {'fillStyle': '#eae56f', 'text': '10 coins'},
-            {'fillStyle': '#89f26e', 'text': '20 coins'},
-            {'fillStyle': '#7de6ef', 'text': '30 coins'},
-            {'fillStyle': '#e7706f', 'text': '40 coins'},
-            {'fillStyle': '#eae56f', 'text': '50 coins'},
-            {'fillStyle': '#89f26e', 'text': '0 coin'}
-        ],
+    // 'segments':        // Define segments including colour and text.
+    //     [
+    //         {'fillStyle': '#eae56f', 'text': '10 coins'},
+    //         {'fillStyle': '#89f26e', 'text': '20 coins'},
+    //         {'fillStyle': '#7de6ef', 'text': '30 coins'},
+    //         {'fillStyle': '#e7706f', 'text': '40 coins'},
+    //         {'fillStyle': '#eae56f', 'text': '50 coins'},
+    //         {'fillStyle': '#89f26e', 'text': '0 coin'}
+    //     ],
     'animation':           // Specify the animation to use.
         {
             'type': 'spinToStop',
@@ -34,52 +34,25 @@ let prizeRate = [
 let wheelPower = 0;
 let wheelSpinning = false;
 
-// -------------------------------------------------------
-// Function to handle the onClick on the power buttons.
-// -------------------------------------------------------
-// function powerSelected(powerLevel)
-// {
-//     // Ensure that power can't be changed while wheel is spinning.
-//     if (wheelSpinning == false) {
-//         // Reset all to grey incase this is not the first time the user has selected the power.
-//         document.getElementById('pw1').className = "";
-//         document.getElementById('pw2').className = "";
-//         document.getElementById('pw3').className = "";
-
-//         Now light up all cells below-and-including the one selected by changing the class.
-//         if (powerLevel >= 1) {
-//             document.getElementById('pw1').className = "pw1";
-//         }
-
-//         if (powerLevel >= 2) {
-//             document.getElementById('pw2').className = "pw2";
-//         }
-
-//         if (powerLevel >= 3) {
-//             document.getElementById('pw3').className = "pw3";
-//         }
-
-//         // Set wheelPower var used when spin button is clicked.
-//         wheelPower = powerLevel;
-
-//         // Light up the spin button by changing it's source image and adding a clickable class to it.
-//         document.getElementById('spin_button').src = "spin_on.png";
-//         document.getElementById('spin_button').className = "clickable";
-//     }
-// }
-
+function init() {
+    theWheel.numSegments = 0;
+    theWheel.segments = [];
+    theWheel.draw();
+}
+init();
 // -------------------------------------------------------
 // Click handler for spin button.
 // -------------------------------------------------------
 function startSpin() {
     // Ensure that spinning can't be clicked again while already running.
-    if (wheelSpinning == false) {
+    if (wheelSpinning == false && theWheel.numSegments >= 2) {
         theWheel.animation.spins = 3;
         document.getElementById('spin_button').src = "spin_off.png";
         document.getElementById('spin_button').className = "";
         wheelSpinning = true;
         audio.play();
-        calculatePrize();
+        // calculatePrize();
+        theWheel.startAnimation();
     }
 }
 
@@ -93,6 +66,11 @@ function resetWheel() {
     wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
 }
 
+function resetStudents() {
+    init();
+    resetWheel();
+}
+
 // -------------------------------------------------------
 // Called when the spin animation has finished by the callback feature of the wheel because I specified callback in the parameters
 // note the indicated segment is passed in as a parmeter as 99% of the time you will want to know this to inform the user of their prize.
@@ -102,23 +80,40 @@ function alertPrize(indicatedSegment) {
     alert("You have won " + indicatedSegment.text);
 }
 
-
-function calculatePrize() {
-    let randomValue = getRandomInt(1, 100);
-    console.log("ket qua" + randomValue);
-    let stopAt;
-    for (var i = prizeRate.length - 1; i >= 0; i--) {
-        if (randomValue >= prizeRate[i].from && randomValue <= prizeRate[i].to) {
-            stopAt = getRandomInt(prizeRate[i].fromAngle, prizeRate[i].toAngle);
-            break;
-        }
-    }
-    theWheel.animation.stopAngle = stopAt;
-    theWheel.startAnimation();
-}
+//
+// function calculatePrize() {
+//     let randomValue = getRandomInt(1, 100);
+//     console.log("ket qua" + randomValue);
+//     let stopAt;
+//     for (var i = prizeRate.length - 1; i >= 0; i--) {
+//         if (randomValue >= prizeRate[i].from && randomValue <= prizeRate[i].to) {
+//             stopAt = getRandomInt(prizeRate[i].fromAngle, prizeRate[i].toAngle);
+//             break;
+//         }
+//     }
+//     theWheel.animation.stopAngle = stopAt;
+//     theWheel.startAnimation();
+// }
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function addSegment() {
+    let nameStudent = document.getElementById("nameStudent").value;
+    if (nameStudent != "" && nameStudent != undefined) {
+        let date = new Date();
+        let randomColor = `#` + (Math.random() * 0xFFFFFF << 0).toString(16);
+        theWheel.addSegment({
+            'text': nameStudent,
+            'fillStyle': randomColor
+        }, 1);
+
+
+        theWheel.draw();
+        document.getElementById("nameStudent").value = "";
+    }
+
 }
