@@ -102,8 +102,19 @@ function resetWheel() {
     theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
     theWheel.draw();                // Call draw to render changes to the wheel.
     wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
+    resetCoinsSplashing();
+    predictWinning = false;
 }
+function resetCoinsSplashing() {
+    coinsAudio.pause();
+    backgroundAudio.play();
+    var exists = document.getElementById('gimmick')
+    if (exists) {
+        exists.parentNode.removeChild(exists);
+        return false;
+    }
 
+}
 // function resetStudents() {
 //     init();
 //     resetWheel();
@@ -118,6 +129,11 @@ function alertPrize(indicatedSegment) {
     var winningSegment = theWheel.getIndicatedSegment();
 
     alert("Phần thưởng là " + winningSegment.text);
+    if(predictWinning) {
+        backgroundAudio.pause();
+        coinsAudio.play();
+        gimmick('body');
+    }
 }
 
 function gimmick(el) {
@@ -184,14 +200,15 @@ function gimmick(el) {
 
 function calculatePrize() {
     let randomValue = getRandomInt();
-    console.log("ket qua" + randomValue);
+    // console.log("ket qua" + randomValue);
     let stopAt;
     for (var i =0;i <= prizeRate.length; i++) {
         if (randomValue >= prizeRate[i].from && randomValue <= prizeRate[i].to) {
+            console.log("phan thuong " + prizeRate[i].prize);
             stopAt = randomIntFromInterval(prizeRate[i].fromAngle, prizeRate[i].toAngle);
-            backgroundAudio.pause();
-            coinsAudio.play();
-            gimmick('body');
+            if(i >= 0 && i <= 4) {
+                predictWinning = true;
+            }
             break;
         }
     }
