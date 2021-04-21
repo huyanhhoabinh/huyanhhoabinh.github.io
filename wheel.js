@@ -12,6 +12,7 @@ let audio = new Audio('background-sound.mp3');
 //         ]
 // });
 let colors = ['#9ED110', '#50B517', '#179067', '#476EAF', '#9f49ac', '#CC42A2', '#FF3BA7', '#FF5800', '#FF8100', '#FEAC00', '#FFCC00', '#EDE604'];
+let choosedColors = [];
 let theWheel = new Winwheel({
     // 'numSegments': 6,     // Specify number of segments.
     'outerRadius': 216,   // Set outer radius so wheel fits inside the background.
@@ -107,6 +108,7 @@ function resetWheel() {
 function resetStudents() {
     init();
     resetWheel();
+    choosedColors = [];
 }
 
 // -------------------------------------------------------
@@ -142,22 +144,30 @@ function getRandomInt() {
 }
 
 function addSegment() {
-    document.getElementById("circle").style.visibility = 'visible';
-    let nameStudent = document.getElementById("nameStudent").value;
+    if(theWheel.numSegments < colors.length) {
+        document.getElementById("circle").style.visibility = 'visible';
+        let nameStudent = document.getElementById("nameStudent").value;
 
-    if (nameStudent != "" && nameStudent != undefined) {
-        let date = new Date();
-        let randomColor = colors[randomIntFromInterval(0, colors.length - 1)];
-        theWheel.addSegment({
-            'text': nameStudent,
-            'fillStyle': randomColor,
-            'strokeStyle' : randomColor,
-            'lineWidth' : 0
-        }, 1);
+        if (nameStudent != "" && nameStudent != undefined) {
+            let date = new Date();
+            // fix duplicate
+            let randomColor = colors[randomIntFromInterval(0, colors.length - 1)];
+            while (choosedColors.includes(randomColor)) {
+                randomColor = colors[randomIntFromInterval(0, colors.length - 1)];
+            }
+            choosedColors.push(randomColor);
+            theWheel.addSegment({
+                'text': nameStudent,
+                'fillStyle': randomColor,
+                'strokeStyle' : randomColor,
+                'lineWidth' : 0
+            }, 1);
 
 
-        theWheel.draw();
-        document.getElementById("nameStudent").value = "";
+            theWheel.draw();
+            document.getElementById("nameStudent").value = "";
+        }
     }
+
 
 }
