@@ -14,7 +14,9 @@ body
 {
     font-family: arial;
 }
-
+/*#canvas {*/
+/*    font-family: 'number-fonts';*/
+/*}*/
 /* Sets the background image for the wheel */
 td.the_wheel
 {
@@ -78,4 +80,9 @@ td.pw3
 .margin_bottom
 {
     margin-bottom: 5px;
+}
+@font-face
+{
+    font-family:'number-fonts';
+    src:url('digital-7.ttf');
 }

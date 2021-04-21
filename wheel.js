@@ -17,7 +17,7 @@ let theWheel = new Winwheel({
     'outerRadius': 216,   // Set outer radius so wheel fits inside the background.
     'textFontSize': 25,    // Set font size as desired.
     'textLineWidth'     : 0,
-    'textFontFamily' : 'Papyrus',
+    'textFontFamily' : 'number-fonts',
     // 'fillStyle' : 'white',
     // 'segments':        // Define segments including colour and text.
     //     [
