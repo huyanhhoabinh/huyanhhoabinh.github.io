@@ -1,4 +1,5 @@
 let backgroundAudio = new Audio('background-sound.mp3');
+backgroundAudio.loop = true;
 let coinsAudio = new Audio('CoinsJackpotSoundEffects.mp3')
 // Create new wheel object specifying the parameters at creation time.
 // let handWheel = new Winwheel({
@@ -127,8 +128,9 @@ function resetCoinsSplashing() {
 function alertPrize(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     var winningSegment = theWheel.getIndicatedSegment();
-
-    alert("Phần thưởng là " + winningSegment.text);
+    document.getElementById("phanthuong").innerText = winningSegment.text;
+    togglePopup();
+    // alert("Phần thưởng là " + winningSegment.text);
     if(predictWinning) {
         backgroundAudio.pause();
         coinsAudio.play();
@@ -220,4 +222,7 @@ function randomIntFromInterval(min, max) { // min and max included
 function getRandomInt() {
     let timestamp = new Date().getUTCMilliseconds();
     return (Math.floor((Math.random() * timestamp)%100) + 1);
+}
+function togglePopup(){
+    document.getElementById("popup-1").classList.toggle("active");
 }

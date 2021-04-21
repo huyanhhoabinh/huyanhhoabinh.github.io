@@ -1,4 +1,5 @@
 let audio = new Audio('background-sound.mp3');
+audio.loop = true;
 // Create new wheel object specifying the parameters at creation time.
 // let handWheel = new Winwheel({
 //     'canvasId'    : 'handWheel',
@@ -118,7 +119,8 @@ function resetStudents() {
 function alertPrize(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     var winningSegment = theWheel.getIndicatedSegment();
-    alert("Người thắng cuộc là " + winningSegment.text);
+    document.getElementById("phanthuong").innerText = winningSegment.text;
+    togglePopup();
 }
 
 //
@@ -170,4 +172,7 @@ function addSegment() {
     }
 
 
+}
+function togglePopup(){
+    document.getElementById("popup-1").classList.toggle("active");
 }
