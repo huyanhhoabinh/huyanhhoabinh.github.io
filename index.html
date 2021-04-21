@@ -1,73 +1,99 @@
-<!--
-    Winhweel.js basic code wheel example by Douglas McKechie @ www.dougtesting.net
-    See website for tutorials and other documentation.
-
-    The MIT License (MIT)
-
-    Copyright (c) 2016 Douglas McKechie
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
--->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Vòng quay may mắn</title>
-    <link rel="stylesheet" href="main.css" type="text/css"/>
-    <script type="text/javascript" src="Winwheel.js"></script>
-    <script type="text/javascript" src="TweenMax.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8">
+    <title>Game</title>
+<!--    <link rel="stylesheet" href="main.css" type="text/css"/>-->
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <style type="text/css">
+        html, body {
+            margin: auto;
+        }
+        .split {
+            background-size: 200%;
+            width: 50%;
+            height: 100vh;
+        }
+        .glass {
+            background-color: white;
+            color: black;
+            opacity: .65;
+        }
+        .dark {
+            background-color: black;
+            color: white;
+            opacity: .65;
+        }
+        #luckynumber-section {
+            background-image: url(https://tinyurl.com/lmfy6jr);
+            background-position: left;
+            float: left;
+        }
+        #millionaire-section {
+            background-image: url(https://tinyurl.com/mcac5ku);
+            background-color: black;
+            background-position: right;
+            float: right;
+        }
+        #dev-section img {
+            float: right;
+        }
+        .clear {
+            clear: both;
+        }
+        #creative, #logic {
+            text-align: center;
+            margin-top: 200px;
+            font-size: 4em;
+        }
+        #creative {
+            font-family: 'Pacifico', monospace;
+            /*color: #c48cff;*/
+        }
+        #logic {
+            color: #79abff;
+            background-color: black;
+            font-family: 'Roboto Mono', monospace;
+        }
+        #amp {
+            position: absolute;
+            top: 150px;
+            margin-left: 45%;
+            font-size: 10em;
+            font-family: sans-serif;
+            z-index: 5;
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
 </head>
 <body>
-<div align="center">
-    <h1>Vòng quay may mắn</h1>
-    <a href="millionaire.html">Mạo hiểm</a>
-    <p>Cuối giờ học các bạn học sinh sẽ có cơ hội quay thưởng để trúng nhiều phần quà có giá trị</p>
-    <br/>
-    <p>Chúc may mắn ! Kiếm nhiều coins để đổi nhiều phần quà hấp dẫn !</p>
-    <br/>
-    <table cellpadding="0" cellspacing="0" border="0">
-        <tr>
-            <td>
-                <div class="power_controls">
-                     <table class="power" cellpadding="10" cellspacing="0">
-                        <tr>
-                            <td>Con số may mắn</td>
-                            <td><input type="text" id="nameStudent" onkeydown="Javascript: if (event.keyCode==13) addSegment();"></td>
-                            <td>
-                            </td>
-                        </tr>
-                         <tr>
-                             <td> <img id="spin_button" src="spin_off.png" alt="Spin" onClick="startSpin();"/></td>
-                             <td><a href="#" onClick="resetWheel(); return false;">Chơi lại</a><br/></td>
-                             <td><a href="#" onClick="resetStudents(); return false;">Khởi tạo lại</a><br/></td>
-                         </tr>
-                    </table>
-                </div>
-            </td>
-            <td width="438" height="582" class="the_wheel" align="center" valign="center" id="circle">
-                <canvas id="canvas" width="434" height="434">
-                    <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try
-                        another.</p>
-                </canvas>
-            </td>
-        </tr>
-    </table>
-</div>
-<script type="text/javascript" src="wheel.js"></script>
+
+    <div id="luckynumber-section" class="split glass">
+        <h1 id="creative">Lucky Number</h1>
+    </div>
+    <div id="amp">&</div>
+    <div id="millionaire-section" class="split dark">
+        <h1 id="logic">Who is millionaire</h1>
+    </div>
+    <div class="clear"></div>
+    <script type="text/javascript">
+        $('#luckynumber-section').hover(function(){
+            $(this).toggleClass('glass', 'medium');
+            $('#creative').css("color", "#c48cff");
+
+        }).click(function () {
+            window.location.href='luckynumber.html'
+        });
+        $('#millionaire-section').hover(function(){
+            $(this).toggleClass('dark', 'medium');
+        }).click(function () {
+            window.location.href='millionaire.html'
+        });
+    </script>
 </body>
 </html>
