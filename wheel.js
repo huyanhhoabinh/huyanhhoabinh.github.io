@@ -1,17 +1,16 @@
 let audio = new Audio('background-sound.mp3');
 audio.loop = true;
-// Create new wheel object specifying the parameters at creation time.
-// let handWheel = new Winwheel({
-//     'canvasId'    : 'handWheel',
-//     'fillStyle'   : '#7de6ef',
-//     'outerRadius' : 150,
-//     'centerY'     : 230,
-//     'numSegments' : 10,
-//     'segments'    :
-//         [
-//             {'fillStyle' : '#e7706f'}
-//         ]
-// });
+let tickSound = new Audio('tick.mp3');  // Create audio object and load desired file.
+tickSound.volume = 0.5;
+function playTickSound()
+{
+    // Stop and rewind the sound (stops it if already playing).
+    tickSound.pause();
+    tickSound.currentTime = 0;
+
+    // Play the sound.
+    tickSound.play();
+}
 let colors = ['#9ED110', '#50B517', '#179067', '#476EAF', '#9f49ac', '#CC42A2', '#FF3BA7', '#FF5800', '#FF8100', '#FEAC00', '#FFCC00', '#EDE604'];
 let choosedColors = [];
 let theWheel = new Winwheel({
@@ -35,7 +34,8 @@ let theWheel = new Winwheel({
             'type': 'spinToStop',
             'duration': 18,     // Duration in seconds.
             'spins': 10,     // Number of complete spins.
-            'callbackFinished' : 'alertPrize()'
+            'callbackFinished' : 'alertPrize()',
+            'callbackSound' : 'playTickSound()'
         }
 });
 // // Create image in memory.

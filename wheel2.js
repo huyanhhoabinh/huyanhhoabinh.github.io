@@ -1,5 +1,16 @@
-let backgroundAudio = new Audio('background-sound.mp3');
+let backgroundAudio = new Audio('millionaire.mp3');
 backgroundAudio.loop = true;
+let tickSound = new Audio('tick.mp3');  // Create audio object and load desired file.
+tickSound.volume = 0.5;
+function playTickSound()
+{
+    // Stop and rewind the sound (stops it if already playing).
+    tickSound.pause();
+    tickSound.currentTime = 0;
+
+    // Play the sound.
+    tickSound.play();
+}
 let coinsAudio = new Audio('CoinsJackpotSoundEffects.mp3')
 // Create new wheel object specifying the parameters at creation time.
 // let handWheel = new Winwheel({
@@ -39,7 +50,8 @@ let theWheel = new Winwheel({
             'type': 'spinToStop',
             'duration': 18,     // Duratio  n in seconds.
             'spins': 10,     // Number of complete spins.
-            'callbackFinished' : 'alertPrize()'
+            'callbackFinished' : 'alertPrize()',
+            'callbackSound' : 'playTickSound()'
         }
 });
 // // Create image in memory.
