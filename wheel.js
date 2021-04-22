@@ -84,12 +84,13 @@ init();
 // Click handler for spin button.
 // -------------------------------------------------------
 function startSpin() {
+    resetWheel1();
     // Ensure that spinning can't be clicked again while already running.
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
         // theWheel.animation.spins = 50;
-        document.getElementById('spin_button').src = "spin_off.png";
-        document.getElementById('spin_button').className = "";
-        wheelSpinning = true;
+        // document.getElementById('spin_button').src = "spin_off.png";
+        // document.getElementById('spin_button').className = "";
+        // wheelSpinning = true;
         audio.play();
         // calculatePrize();
         theWheel.startAnimation();
@@ -175,4 +176,12 @@ function addSegment() {
 }
 function togglePopup(){
     document.getElementById("popup-1").classList.toggle("active");
+}
+
+function resetWheel1()
+{
+    theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+    theWheel.rotationAngle = 0;
+    // predictWinning = false;
+    // resetCoinsSplashing();
 }

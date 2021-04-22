@@ -12,6 +12,7 @@ function playTickSound()
     tickSound.play();
 }
 let coinsAudio = new Audio('CoinsJackpotSoundEffects.mp3')
+coinsAudio.loop = true;
 // Create new wheel object specifying the parameters at creation time.
 // let handWheel = new Winwheel({
 //     'canvasId'    : 'handWheel',
@@ -95,14 +96,17 @@ let wheelSpinning = false;
 // Click handler for spin button.
 // -------------------------------------------------------
 function startSpin() {
+    resetWheel1();
     // Ensure that spinning can't be clicked again while already running.
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
         // theWheel.animation.spins = 50;
-        document.getElementById('spin_button').src = "spin_off.png";
-        document.getElementById('spin_button').className = "";
-        wheelSpinning = true;
+        // document.getElementById('spin_button').src = "spin_off.png";
+        // document.getElementById('spin_button').className = "";
+        // wheelSpinning = true;
         backgroundAudio.play();
         calculatePrize();
+
+        theWheel.startAnimation();
         //theWheel.startAnimation();
     }
 }
@@ -110,14 +114,14 @@ function startSpin() {
 // -------------------------------------------------------
 // Function for reset button.
 // -------------------------------------------------------
-function resetWheel() {
-    theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
-    theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
-    theWheel.draw();                // Call draw to render changes to the wheel.
-    wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
-    resetCoinsSplashing();
-    predictWinning = false;
-}
+// function resetWheel() {
+//     theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+//     theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+//     theWheel.draw();                // Call draw to render changes to the wheel.
+//     wheelSpinning = false;          // Reset to false to power buttons and spin can be clicked again.
+//     resetCoinsSplashing();
+//     predictWinning = false;
+// }
 function resetCoinsSplashing() {
     coinsAudio.pause();
     backgroundAudio.play();
@@ -237,4 +241,12 @@ function getRandomInt() {
 }
 function togglePopup(){
     document.getElementById("popup-1").classList.toggle("active");
+}
+
+function resetWheel1()
+{
+    theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+    theWheel.rotationAngle = 0;
+    predictWinning = false;
+    resetCoinsSplashing();
 }
