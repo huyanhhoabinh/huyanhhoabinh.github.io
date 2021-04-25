@@ -1,9 +1,9 @@
-let audio = new Audio('background-sound.mp3');
+let audio = new Audio('resources/background-sound.mp3');
 audio.loop = true;
-let tickSound = new Audio('tick.mp3');  // Create audio object and load desired file.
+let tickSound = new Audio('resources/tick.mp3');  // Create audio object and load desired file.
 tickSound.volume = 0.5;
-function playTickSound()
-{
+
+function playTickSound() {
     // Stop and rewind the sound (stops it if already playing).
     tickSound.pause();
     tickSound.currentTime = 0;
@@ -11,52 +11,25 @@ function playTickSound()
     // Play the sound.
     tickSound.play();
 }
+
 let colors = ['#9ED110', '#50B517', '#179067', '#476EAF', '#9f49ac', '#CC42A2', '#FF3BA7', '#FF5800', '#FF8100', '#FEAC00', '#FFCC00', '#EDE604'];
 let choosedColors = [];
 let theWheel = new Winwheel({
     // 'numSegments': 6,     // Specify number of segments.
     'outerRadius': 216,   // Set outer radius so wheel fits inside the background.
     'textFontSize': 25,    // Set font size as desired.
-    'textLineWidth'     : 0,
-    'textFontFamily' : 'number-fonts',
-    // 'fillStyle' : 'white',
-    // 'segments':        // Define segments including colour and text.
-    //     [
-    //         {'fillStyle': '#eae56f', 'text': '10 coins'},
-    //         {'fillStyle': '#89f26e', 'text': '20 coins'},
-    //         {'fillStyle': '#7de6ef', 'text': '30 coins'},
-    //         {'fillStyle': '#e7706f', 'text': '40 coins'},
-    //         {'fillStyle': '#eae56f', 'text': '50 coins'},
-    //         {'fillStyle': '#89f26e', 'text': '0 coin'}
-    //     ],
+    'textLineWidth': 0,
+    'textFontFamily': 'number-fonts',
     'animation':           // Specify the animation to use.
         {
             'type': 'spinToStop',
             'duration': 18,     // Duration in seconds.
             'spins': 10,     // Number of complete spins.
-            'callbackFinished' : 'alertPrize()',
-            'callbackSound' : 'playTickSound()'
+            'callbackFinished': 'alertPrize()',
+            'callbackSound': 'playTickSound()'
         }
 });
 // // Create image in memory.
-// let handImage = new Image();
-// handImage.src = 'pointing_hand.png';
-// // Set onload of the image to anonymous function to draw on the canvas once the image has loaded.
-// handImage.onload = function()
-// {
-//     let handCanvas = document.getElementById('canvas');
-//     let ctx = handCanvas.getContext('2d');
-//
-//     if (ctx) {
-//         ctx.save();
-//         ctx.translate(200, 150);
-//         ctx.rotate(theWheel.degToRad(-40));  // Here I just rotate the image a bit.
-//         ctx.translate(-200, -150);
-//         ctx.drawImage(handImage, 255, 110);   // Draw the image at the specified x and y.
-//         ctx.restore();
-//     }
-// };
-
 // Set source of the image. Once loaded the onload callback above will be triggered.
 
 
@@ -79,6 +52,7 @@ function init() {
     theWheel.draw();
     document.getElementById("circle").style.visibility = 'hidden';
 }
+
 init();
 // -------------------------------------------------------
 // Click handler for spin button.
@@ -87,12 +61,7 @@ function startSpin() {
     resetWheel1();
     // Ensure that spinning can't be clicked again while already running.
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
-        // theWheel.animation.spins = 50;
-        // document.getElementById('spin_button').src = "spin_off.png";
-        // document.getElementById('spin_button').className = "";
-        // wheelSpinning = true;
         audio.play();
-        // calculatePrize();
         theWheel.startAnimation();
     }
 }
@@ -124,30 +93,17 @@ function alertPrize(indicatedSegment) {
     togglePopup();
 }
 
-//
-// function calculatePrize() {
-//     let randomValue = getRandomInt(1, 100);
-//     console.log("ket qua" + randomValue);
-//     let stopAt;
-//     for (var i = prizeRate.length - 1; i >= 0; i--) {
-//         if (randomValue >= prizeRate[i].from && randomValue <= prizeRate[i].to) {
-//             stopAt = getRandomInt(prizeRate[i].fromAngle, prizeRate[i].toAngle);
-//             break;
-//         }
-//     }
-//     theWheel.animation.stopAngle = stopAt;
-//     theWheel.startAnimation();
-// }
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 function getRandomInt() {
     let timestamp = new Date().getUTCMilliseconds();
-    return (Math.floor((Math.random() * timestamp)%100) + 1);
+    return (Math.floor((Math.random() * timestamp) % 100) + 1);
 }
 
 function addSegment() {
-    if(theWheel.numSegments < colors.length) {
+    if (theWheel.numSegments < colors.length) {
         document.getElementById("circle").style.visibility = 'visible';
         let nameStudent = document.getElementById("nameStudent").value;
 
@@ -162,8 +118,8 @@ function addSegment() {
             theWheel.addSegment({
                 'text': nameStudent,
                 'fillStyle': randomColor,
-                'strokeStyle' : randomColor,
-                'lineWidth' : 0
+                'strokeStyle': randomColor,
+                'lineWidth': 0
             }, 1);
 
 
@@ -174,14 +130,19 @@ function addSegment() {
 
 
 }
-function togglePopup(){
+
+function togglePopup() {
     document.getElementById("popup-1").classList.toggle("active");
 }
 
-function resetWheel1()
-{
+function resetWheel1() {
     theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
     theWheel.rotationAngle = 0;
-    // predictWinning = false;
-    // resetCoinsSplashing();
 }
+
+const popups = document.getElementById('popup-1');
+window.addEventListener('click', ({target}) => {
+    const popup = target.closest('.popup');
+    popups.classList.remove('active');
+    //resetCoinsSplashing();
+});

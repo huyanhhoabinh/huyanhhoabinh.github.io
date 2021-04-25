@@ -20,7 +20,7 @@ body
 /* Sets the background image for the wheel */
 td.the_wheel
 {
-    background-image: url(./wheel_back.png);
+    background-image: url(../resources/wheel_back.png);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -84,7 +84,7 @@ td.pw3
 @font-face
 {
     font-family:'number-fonts';
-    src:url('digital-7.ttf');
+    src:url('../resources/digital-7.ttf');
 }
 
 
