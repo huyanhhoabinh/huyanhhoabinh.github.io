@@ -28,12 +28,12 @@
             <td>
                 <div class="power_controls">
                     <table class="power" cellpadding="10" cellspacing="0">
-<!--                        <tr>-->
-<!--                            <td>Enter name</td>-->
-<!--                            <td><input type="text" id="nameStudent" onkeydown="Javascript: if (event.keyCode==13) addSegment();"></td>-->
-<!--                            <td>-->
-<!--                            </td>-->
-<!--                        </tr>-->
+                        <tr>
+                            <td>Số tiền cược :</td>
+                            <td><input type="text" id="inputCoin" onkeydown="Javascript: if (event.keyCode==13) validateCoin();"></td>
+                            <td>Gía trị cược hiện tại : <span id="currentBetValue">0</span></td>
+                            <td><a href="#" onClick="resetCoin(); return false;">Khởi tạo lại</a></td>
+                        </tr>
                         <tr>
                             <td> <img id="spin_button" src="resources/spin_off.png" alt="Spin" onClick="startSpin();"/></td>
 <!--                            <td> <img id="spin" src="spin_off.png" alt="Spin" onClick="resetWheel1();theWheel.startAnimation();"/></td>-->
@@ -58,6 +58,7 @@
 <!--        <div class="close-btn" onclick="togglePopup()">&times;</div>-->
         <h1>Phần thưởng là :</h1>
         <h1 id="phanthuong"></h1>
+        <h2>Coin nhận về : <span id="coinReturn"></span> coins</h2>
     </div>
 </div>
 <script type="text/javascript" src="js/milionaire.js"></script>

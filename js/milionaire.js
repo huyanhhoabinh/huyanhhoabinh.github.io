@@ -2,7 +2,6 @@ let backgroundAudio = new Audio('resources/background-sound.mp3');
 backgroundAudio.loop = true;
 let tickSound = new Audio('resources/tick.mp3');  // Create audio object and load desired file.
 tickSound.volume = 0.5;
-
 function playTickSound() {
     // Stop and rewind the sound (stops it if already playing).
     tickSound.pause();
@@ -13,7 +12,7 @@ function playTickSound() {
 
 let coinsAudio = new Audio('resources/CoinsJackpotSoundEffects.mp3')
 coinsAudio.loop = true;
-
+let currentBetValue = 0;
 let predictWinning = false;
 let colors = ['#9ED110', '#50B517', '#179067', '#476EAF', '#9f49ac', '#CC42A2', '#FF3BA7', '#FF5800', '#FF8100', '#FEAC00', '#FFCC00', '#EDE604'];
 let theWheel = new Winwheel({
@@ -25,15 +24,15 @@ let theWheel = new Winwheel({
     // 'fillStyle' : 'white',
     'segments':        // Define segments including colour and text.
         [
-            {'fillStyle': '#9ED110', 'text': 'x1 coins'},
-            {'fillStyle': '#50B517', 'text': 'x1/2 coins'},
-            {'fillStyle': '#179067', 'text': 'x2 coins'},
-            {'fillStyle': '#476EAF', 'text': 'x1/3 coins'},
-            {'fillStyle': '#CC42A2', 'text': 'x3 coins'},
-            {'fillStyle': '#FF3BA7', 'text': 'x1/4 coins'},
-            {'fillStyle': '#FF5800', 'text': 'x5 coins'},
-            {'fillStyle': '#FF8100', 'text': 'Empty coins'},
-            {'fillStyle': '#FEAC00', 'text': 'x10'}
+            {'fillStyle': '#9ED110', 'text': 'x1 coins', 'rateValue' : '1'},
+            {'fillStyle': '#50B517', 'text': 'x1/2 coins', 'rateValue' : '0.5'},
+            {'fillStyle': '#179067', 'text': 'x2 coins', 'rateValue' : '2'},
+            {'fillStyle': '#476EAF', 'text': 'x1/3 coins', 'rateValue' : '0.33'},
+            {'fillStyle': '#CC42A2', 'text': 'x3 coins', 'rateValue' : '3'},
+            {'fillStyle': '#FF3BA7', 'text': 'x1/4 coins', 'rateValue' : '0.25'},
+            {'fillStyle': '#FF5800', 'text': 'x5 coins', 'rateValue' : '5'},
+            {'fillStyle': '#FF8100', 'text': 'Empty coins', 'rateValue' : '0'},
+            {'fillStyle': '#FEAC00', 'text': 'x10', 'rateValue' : '10'}
         ],
     'animation':           // Specify the animation to use.
         {
@@ -69,7 +68,7 @@ let wheelSpinning = false;
 function startSpin() {
     resetWheel1();
     // Ensure that spinning can't be clicked again while already running.
-    if (wheelSpinning == false && theWheel.numSegments >= 2) {
+    if (wheelSpinning == false && theWheel.numSegments >= 2 && currentBetValue > 0) {
         backgroundAudio.play();
         calculatePrize();
         theWheel.startAnimation();
@@ -98,6 +97,7 @@ function alertPrize(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     var winningSegment = theWheel.getIndicatedSegment();
     document.getElementById("phanthuong").innerText = winningSegment.text;
+    document.getElementById("coinReturn").innerText = round5(currentBetValue*parseFloat(winningSegment.rateValue)) + "";
     togglePopup();
     // alert("Phần thưởng là " + winningSegment.text);
     if (predictWinning) {
@@ -106,7 +106,10 @@ function alertPrize(indicatedSegment) {
         gimmick('body');
     }
 }
-
+function round5(x)
+{
+    return Math.ceil(x/5)*5;
+}
 function gimmick(el) {
     var exists = document.getElementById('gimmick')
     if (exists) {
@@ -212,3 +215,24 @@ window.addEventListener('click', ({target}) => {
     popups.classList.remove('active');
     resetCoinsSplashing();
 });
+function validateCoin() {
+    let valueInput;
+    // Get the value of the input field with id="numb"
+    valueInput = document.getElementById("inputCoin").value;
+
+    // If x is Not a Number or less than one or greater than 10
+    if (isNaN(valueInput) || (![10,20,30,40,50].includes(parseInt(valueInput)))) {
+        document.getElementById("inputCoin").value = "";
+        currentBetValue = 0;
+        document.getElementById("currentBetValue").innerText = "0";
+    } else {
+        currentBetValue = valueInput;
+        document.getElementById("currentBetValue").innerText = valueInput + "";
+    }
+}
+
+function resetCoin() {
+    currentBetValue = 0;
+    document.getElementById("currentBetValue").innerText = "0";
+    document.getElementById("inputCoin").value = "";
+}
