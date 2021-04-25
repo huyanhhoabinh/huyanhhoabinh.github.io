@@ -146,3 +146,6 @@ window.addEventListener('click', ({target}) => {
     popups.classList.remove('active');
     //resetCoinsSplashing();
 });
+function goBack() {
+    window.history.back();
+}

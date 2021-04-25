@@ -240,3 +240,6 @@ function resetCoin() {
     document.getElementById("currentBetValue").innerText = "0";
     document.getElementById("inputCoin").value = "";
 }
+function goBack() {
+    window.history.back();
+}
