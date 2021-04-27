@@ -99,7 +99,11 @@ function alertPrize(indicatedSegment) {
     var winningSegment = theWheel.getIndicatedSegment();
     document.getElementById("phanthuong").innerText = winningSegment.text;
     let tempValue = round5(currentBetValue * parseFloat(winningSegment.rateValue));
-    document.getElementById("coinReturn").innerText = (parseFloat(winningSegment.rateValue) >= 1 ? (tempValue + currentBetValue) : tempValue) + "";
+    let finalPrize = (parseFloat(winningSegment.rateValue) >= 1 ? (tempValue + currentBetValue) : tempValue);
+    if(finalPrize < 10) {
+        finalPrize = 0;
+    }
+    document.getElementById("coinReturn").innerText = finalPrize + "";
     togglePopup();
     // alert("Phần thưởng là " + winningSegment.text);
     if (predictWinning) {
@@ -225,7 +229,7 @@ function validateCoin() {
     valueInput = document.getElementById("inputCoin").value;
 
     // If x is Not a Number or less than one or greater than 10
-    if (isNaN(valueInput) || (![10, 20, 30, 40, 50].includes(parseInt(valueInput)))) {
+    if (isNaN(valueInput) || (![10, 20, 30, 40, 50, 100].includes(parseInt(valueInput)))) {
         document.getElementById("inputCoin").value = "";
         currentBetValue = 0;
         document.getElementById("currentBetValue").innerText = "0";
