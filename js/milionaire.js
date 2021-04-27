@@ -72,6 +72,7 @@ function startSpin() {
     if (wheelSpinning == false && theWheel.numSegments >= 2 && currentBetValue > 0) {
         backgroundAudio.play();
         calculatePrize();
+        lockOrUnlock("inputCoin", true);
         theWheel.startAnimation();
     }
 }
@@ -95,6 +96,7 @@ function resetCoinsSplashing() {
 // note the indicated segment is passed in as a parmeter as 99% of the time you will want to know this to inform the user of their prize.
 // -------------------------------------------------------
 function alertPrize(indicatedSegment) {
+    lockOrUnlock("inputCoin", false);
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     var winningSegment = theWheel.getIndicatedSegment();
     document.getElementById("phanthuong").innerText = winningSegment.text;
@@ -243,7 +245,14 @@ function resetCoin() {
     currentBetValue = 0;
     document.getElementById("currentBetValue").innerText = "0";
     document.getElementById("inputCoin").value = "";
+    theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+    theWheel.rotationAngle = 0;
+    lockOrUnlock("inputCoin", false);
 }
 function goBack() {
     window.history.back();
+}
+
+function lockOrUnlock(id, lockOrUnLock) {
+    document.getElementById(id).disabled = lockOrUnLock;
 }

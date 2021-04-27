@@ -45,7 +45,6 @@ let prizeRate = [
 // Vars used by the code in this page to do power controls.
 let wheelPower = 0;
 let wheelSpinning = false;
-
 function init() {
     theWheel.numSegments = 0;
     theWheel.segments = [];
@@ -62,6 +61,7 @@ function startSpin() {
     // Ensure that spinning can't be clicked again while already running.
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
         audio.play();
+        lockOrUnlock("nameStudent", true);
         theWheel.startAnimation();
     }
 }
@@ -80,6 +80,7 @@ function resetStudents() {
     init();
     resetWheel();
     choosedColors = [];
+    lockOrUnlock("nameStudent", false);
 }
 
 // -------------------------------------------------------
@@ -87,6 +88,7 @@ function resetStudents() {
 // note the indicated segment is passed in as a parmeter as 99% of the time you will want to know this to inform the user of their prize.
 // -------------------------------------------------------
 function alertPrize(indicatedSegment) {
+    lockOrUnlock("nameStudent", false);
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     var winningSegment = theWheel.getIndicatedSegment();
     document.getElementById("phanthuong").innerText = winningSegment.text;
@@ -148,4 +150,7 @@ window.addEventListener('click', ({target}) => {
 });
 function goBack() {
     window.history.back();
+}
+function lockOrUnlock(id, lockOrUnLock) {
+    document.getElementById(id).disabled = lockOrUnLock;
 }
