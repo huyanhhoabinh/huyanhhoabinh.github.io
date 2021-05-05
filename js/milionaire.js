@@ -102,9 +102,6 @@ function alertPrize(indicatedSegment) {
     document.getElementById("phanthuong").innerText = winningSegment.text;
     let tempValue = round5(currentBetValue * parseFloat(winningSegment.rateValue));
     let finalPrize = (parseFloat(winningSegment.rateValue) >= 1 ? (tempValue + currentBetValue) : tempValue);
-    if(finalPrize < 10) {
-        finalPrize = 0;
-    }
     document.getElementById("coinReturn").innerText = finalPrize + "";
     togglePopup();
     // alert("Phần thưởng là " + winningSegment.text);
@@ -231,7 +228,7 @@ function validateCoin() {
     valueInput = document.getElementById("inputCoin").value;
 
     // If x is Not a Number or less than one or greater than 10
-    if (isNaN(valueInput) || (![10, 20, 30, 40, 50, 100].includes(parseInt(valueInput)))) {
+    if (isNaN(valueInput) || (![10, 20, 30, 40, 50, 60, 70, 80, 90, 100].includes(parseInt(valueInput)))) {
         document.getElementById("inputCoin").value = "";
         currentBetValue = 0;
         document.getElementById("currentBetValue").innerText = "0";
