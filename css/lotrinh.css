@@ -91,6 +91,9 @@
 .color7 {
     background-color: #fac946;
 }
+.color8 {
+    background-color: #03a07b;
+}
 .tearcher-row{
     display: flex;
     flex-direction: row;
