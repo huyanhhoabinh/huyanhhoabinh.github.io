@@ -87,7 +87,9 @@
 .color6 {
     background-color: #9CC14E;
 }
-
+.color7 {
+    background-color: #fac946;
+}
 .tearcher-row{
     display: flex;
     flex-direction: row;
