@@ -3,8 +3,8 @@
     src: url('../fonts/SVN-Bublont.otf');
 }
 @font-face {
-    font-family: 'MyriadPro-Bold';
-    src: url('../fonts/MyriadPro-Bold.otf');
+    font-family: 'OpenSans-Bold';
+    src: url('../fonts/OpenSans-Bold.ttf');
 }
 
 @font-face {
@@ -24,7 +24,7 @@
 .title {
     font-size: 24px;
     color: #ffffff;
-    font-family: 'MyriadPro-Bold';
+    font-family: 'OpenSans-Bold';
 }
 
 .list {
