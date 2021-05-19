@@ -62,8 +62,16 @@ function startSpin() {
     if (wheelSpinning == false && theWheel.numSegments >= 2) {
         audio.play();
         lockOrUnlock("nameStudent", true);
+        calculatePrize();
         theWheel.startAnimation();
     }
+}
+
+function calculatePrize() {
+    let randomValue = getRandomInt();
+
+    theWheel.animation.stopAngle = randomValue;
+    // theWheel.startAnimation();
 }
 
 // -------------------------------------------------------
@@ -101,7 +109,7 @@ function randomIntFromInterval(min, max) { // min and max included
 
 function getRandomInt() {
     let timestamp = new Date().getUTCMilliseconds();
-    return (Math.floor((Math.random() * timestamp) % 100) + 1);
+    return (Math.floor((Math.random() * timestamp) % 360) + 1);
 }
 
 function addSegment() {
@@ -129,8 +137,6 @@ function addSegment() {
             document.getElementById("nameStudent").value = "";
         }
     }
-
-
 }
 
 function togglePopup() {
